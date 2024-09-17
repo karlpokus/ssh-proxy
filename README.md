@@ -41,7 +41,7 @@ $ ssh root@sshd -o ProxyCommand="./bin/cmd %h %p"
 - [x] don't expose sshd
 - [ ] put sshd_config in docker volume
 - [x] make proxy command log to file
-- [ ] ssh session timeout
+- [ ] set ssh session timeout to token expiration
 - [ ] proxy command idP login dance
 - [ ] mitm
 - [ ] set sshd hostname
@@ -49,3 +49,10 @@ $ ssh root@sshd -o ProxyCommand="./bin/cmd %h %p"
 - [x] mv backend into a private network
 - [ ] proxy other protocols
 - [ ] is http.Mux blocking?
+- [ ] federated auth w JWTs
+- [ ] ssh certs
+- [ ] mTLS
+- [ ] io.MultiWriter for conn metrics
+- [ ] proxy-command exit codes and error messages
+- [ ] proxy-server mgmt controls (kill sessions etc)
+- [ ] unit tests
