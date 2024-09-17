@@ -9,14 +9,16 @@ requirements:
 - go
 
 ````sh
+# run once
+$ make init
 # build all the things
 $ make build
 # run sshd
-$ docker run -d -p 2222:22 sshd
+$ docker run -d --name sshd --network pnet sshd
 # run proxy-server
-$ go run proxy/server/server.go
+$ docker run -p 8080:8080 --network pnet proxy-server
 # run ssh client
-$ ssh root@localhost -p 2222 -o ProxyCommand="./bin/cmd %h %p"
+$ ssh root@sshd -o ProxyCommand="./bin/cmd %h %p"
 ````
 
 # todos
@@ -28,6 +30,6 @@ $ ssh root@localhost -p 2222 -o ProxyCommand="./bin/cmd %h %p"
 - [ ] mitm
 - [ ] set sshd hostname
 - [x] re-create in AWS alb? no
-- [ ] mv backend into a private network
+- [x] mv backend into a private network
 - [ ] proxy other protocols
 - [ ] is http.Mux blocking?
