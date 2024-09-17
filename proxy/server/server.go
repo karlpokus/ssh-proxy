@@ -19,7 +19,11 @@ func main() {
 
 func handler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("Received request: %s %s", r.Method, r.Host)
+		log.Printf("Request: %s %s from %s",
+			r.Method,
+			r.Host,
+			r.RemoteAddr,
+		)
 		if r.Method != http.MethodConnect {
 			http.Error(w, "only HTTP CONNECT allowed", http.StatusMethodNotAllowed)
 			return
@@ -37,6 +41,11 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer serverConn.Close()
+	log.Printf("Proxy connected to %s", dest)
+	log.Printf("Connection details: %s to %s",
+		serverConn.LocalAddr(),
+		serverConn.RemoteAddr(),
+	)
 
 	// Upgrade connection to a tunnel
 	hijacker, ok := w.(http.Hijacker)
@@ -54,6 +63,8 @@ func handle(w http.ResponseWriter, r *http.Request) {
 
 	// Return 200 to client
 	clientConn.Write([]byte("HTTP/1.1 200 Connection Established\r\n\r\n"))
+
+	log.Println("200 returned to client")
 
 	// Proxy data
 	go func() {
