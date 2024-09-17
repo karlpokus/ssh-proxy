@@ -46,10 +46,14 @@ func main() {
 	defer proxyConn.Close()
 
 	// Prepare the HTTP CONNECT request
+	//
+	// CONNECT target:port HTTP/1.1
+	// Host: proxy:port
+	//
 	//auth := base64.StdEncoding.EncodeToString([]byte(proxyUsername + ":" + proxyPassword))
 	//connectRequest := fmt.Sprintf("CONNECT %s:%s HTTP/1.1\r\nHost: %s:%s\r\nProxy-Authorization: Basic %s\r\n\r\n",
 	connectRequest := fmt.Sprintf("CONNECT %s:%s HTTP/1.1\r\nHost: %s:%s\r\n\r\n",
-		sshHost, sshPort, sshHost, sshPort)
+		sshHost, sshPort, proxyHost, proxyPort)
 
 	// Send CONNECT
 	_, err = proxyConn.Write([]byte(connectRequest))
