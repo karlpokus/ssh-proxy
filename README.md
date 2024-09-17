@@ -2,7 +2,23 @@
 ssh-proxy with idP support without exposing sshd.
 
 # local dev env
-The guilty parties: ssh client <-> proxy command <-> proxy server <-> sshd target
+The guilty parties:
+
+````
+ssh client
+    ^
+    |
+    v
+proxy command
+    ^
+    |           host network
+----v-------------------------
+proxy server    private network
+    ^
+    |
+    v
+sshd
+````
 
 requirements:
 - docker
