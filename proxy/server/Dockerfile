@@ -1,6 +1,6 @@
 FROM golang:1.22
 
-COPY server.go go.mod .
+COPY server.go go.mod ./
 
 RUN go build
 
